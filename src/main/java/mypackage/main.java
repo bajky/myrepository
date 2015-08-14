@@ -1,7 +1,9 @@
 package mypackage;
 
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -12,19 +14,19 @@ import org.hibernate.cfg.Configuration;
 class App {
 
     public static void main(String[] args) {
+        Library library = new Library("aaaa","bbbb");
 
-        Book book1 = new Book("firs", "a");
-        Book book2 = new Book("second", "b");
-        Book book3 = new Book("last", "c");
+        library.setBooks(new HashSet<Book>());
+        Book book1 = new Book("firs", "a",library);
+        library.getBooks().add(book1);
+
 
         System.out.println(" =======CREATE =======");
 
 
-        create(book1);
-        create(book2);
-        create(book3);
+        create(library);
     }
-        public static Integer create(Book e){
+        public static Integer create(Library e){
             Session session = getSessionFactory().openSession();
             session.beginTransaction();
             session.save(e);
@@ -32,7 +34,7 @@ class App {
             session.close();
             System.out.println("Successfully created " + e.toString());
 
-            return e.getId();
+            return e.getLibrary_id();
         }
 
         public static SessionFactory getSessionFactory() {

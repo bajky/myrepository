@@ -4,28 +4,32 @@ package mypackage;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "BOOK")
+@Table(name = "book")
 public class Book {
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column(name = "book_id")
     private int id;
 
-    @Column(name = "name")
+    @Column(name = "book_name")
     private String name;
 
-    @Column(name = "isbn")
+    @Column(name = "book_isbn")
     private String ISBN;
-    public Book(String name, String ISBN){
+
+    @ManyToOne
+    @JoinColumn(name = "library_id")
+    private Library library;
+
+
+    public Book(String name, String ISBN, Library library){
 
         this.name = name;
         this.ISBN = ISBN;
+        this.library = library;
     }
-
-
-
 
 
     public int getId() {
